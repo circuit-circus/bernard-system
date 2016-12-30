@@ -1,0 +1,27 @@
+{
+  "name": "app-bernard",
+  "version": "1.0",
+  "title": "APP BERNARD",
+  "description": "App for the Bernard System",
+  "tags": [
+    {
+      "label": "arduino",
+      "type": "platform"
+    },
+    {
+      "label": "ble",
+      "type": "comm"
+    }
+  ],
+  "libraries": [
+    {
+      "name": "jquery",
+      "version": "2.1.1"
+    }
+  ],
+  "index-file": "index.html",
+  "app-dir": "app",
+  "uuid": "4caffdba-3c8b-4045-bd8a-f96ede556c30",
+  "icon": "app-icon.png",
+  "doc-url": "https://evothings.com/2.1/doc/examples/arduino101-led-onoff.html"
+}
