@@ -12,14 +12,16 @@ BLEService ledService("19B10000-E8F2-537E-4F6C-D104768A1214"); // BLE LED Servic
 BLEUnsignedCharCharacteristic switchCharacteristic("19B10001-E8F2-537E-4F6C-D104768A1214", BLERead | BLENotify);
 
 const int ledPin = 13; // pin to use for the LED
+const int photoPin = 0;
+int photoVal;
 
 long previousMillis = 0;  // last time the heart rate was checked, in ms
 
 void setup() {
   Serial.begin(9600);
 
-  // set LED pin to output mode
   pinMode(ledPin, OUTPUT);
+  pinMode(photoPin, INPUT);
 
   // set advertised local name and service UUID:
   blePeripheral.setLocalName("LED");
@@ -50,11 +52,10 @@ void loop() {
 
     // while the central is still connected to peripheral:
     while (central.connected()) {
-      long currentMillis = millis();
-      // if 200ms have passed, check the heart rate measurement:
-      if (currentMillis - previousMillis >= 5000) {
-        previousMillis = currentMillis;
-        Serial.println("Sending 1");
+      photoVal = analogRead(photoPin);
+
+      if (photoVal < 1000) {
+        //Serial.println("Sending 1");
         switchCharacteristic.setValue(1);  // and update the heart rate measurement characteristic
       } else {
         //Serial.println("Sending 0");
