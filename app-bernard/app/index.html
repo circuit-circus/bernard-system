@@ -8,9 +8,8 @@
 
 	<title>BERNARD</title>
 
-	<style>
-		@import 'ui/css/evothings-app.css';
-	</style>
+	<link rel="stylesheet" href="src/style.css">
+
 
 	<script>
 	// Redirect console.log to Evothings Workbench.
@@ -21,17 +20,58 @@
 	};
 	</script>
 
-	<script src="cordova.js"></script>
-	<script src="libs/jquery/jquery.js"></script>
-	<script src="libs/evothings/evothings.js"></script>
-	<script src="libs/evothings/ui/ui.js"></script>
-	<script src="libs/evothings/arduinoble/arduinoble.js"></script>
-
 </head>
 
 <body ontouchstart=""><!-- ontouchstart="" enables low-delay CSS transitions. -->
 
 	<header>
+		<h1>Bernard</h1>
+		<div class="burger-container"><div class="burger"></div></div>
+		<div class="plus-container"><div class="plus">+</div></div>
+	</header>
+
+	<div class="system-loading-container">
+		<div class="loading-animation"></div>
+	</div>
+
+	<div class="system-connected-container">
+		<main>
+			<p class="encourage-text bold">Almost there!</p>
+			<p class="encourage-text time-left">...</p>
+			<p class="tap-text"><span class="tap-amount">80</span> SEK / Tap <span class="change-tap">Change</span></p>
+			<div class="item-progress-container">
+				<div class="progress" data-item-paid="7482" data-item-price="8895">
+				    <svg class="progress-circle" width="200px" height="200px" xmlns="http://www.w3.org/2000/svg">
+					    <circle class="progress-circle-back" cx="80" cy="80" r="74"></circle>
+				        <circle class="progress-circle-prog" cx="80" cy="80" r="74"></circle>
+				    </svg>
+					<div class="progress-text" data-progress="0">0 SEK SAVED</div>
+				</div>
+			</div>
+		</main>
+
+		<footer>
+			<div class="footer-fill"></div>
+			<div class="item-image-container">
+				<div class="item-image" style="background-image: url('src/ipad.png')"></div>
+			</div>
+			<div class="item-info-container">
+				<div class="content">
+					<p class="bold item-name">Apple iPad Pro</p>
+					<p class="item-price">8895 SEK</p>
+				</div>
+			</div>
+
+			<div class="item-loan-container">
+				<div class="content">
+					<p class="bold">Want it now?</p>
+					<p class="loan-text">Let us help you with those last <span class="money-left"></span> SEK</p>
+				</div>
+			</div>
+		</footer>
+	</div>
+
+<!-- 	<header>
 		<button class="back" onclick="history.back()">
 			<img src="ui/images/arrow-left.svg" />
 		</button>
@@ -39,7 +79,7 @@
 		<img class="logotype" src="ui/images/logo.svg" alt="Evothings" />
 
 		<!--<button class="menu" onclick=""><img src="ui/images/menu.svg" /></button>-->
-	</header>
+	<!-- </header>
 
 	<h1>BERNARD</h1>
 
@@ -55,62 +95,15 @@
 
 	<br />
 
-	<button class="red wide big" onclick="app.ledOff()">LED OFF</button>
+	<button class="red wide big" onclick="app.ledOff()">LED OFF</button> -->
 
-	<script>
-	// Application object.
-	var app = {}
 
-	// Connected device.
-	app.device = null;
-
-	// Turn on LED.
-	app.ledOn = function() {
-		app.device && app.device.writeDataArray(new Uint8Array([1]), '19b10001-e8f2-537e-4f6c-d104768a1214');
-	}
-
-	// Turn off LED.
-	app.ledOff = function() {
-		app.device && app.device.writeDataArray(new Uint8Array([0]), '19b10001-e8f2-537e-4f6c-d104768a1214');
-	}
-
-	app.getData = function() {
-		console.log('enable notifs start');
-		app.device && app.device.enableNotifications('19b10001-e8f2-537e-4f6c-d104768a1214');
-	}
-
-	app.showMessage = function(info) {
-		document.getElementById('info').innerHTML = info
-	};
-
-	// Called when BLE and other native functions are available.
-	app.onDeviceReady = function() {
-		app.showMessage('Touch the connect button to begin.');
-	};
-
-	app.connect = function() {
-		evothings.arduinoble.close();
-
-		app.showMessage('Connecting...');
-
-		evothings.arduinoble.connect(
-			'LED', // Advertised name of BLE device.
-			function(device)
-			{
-				app.device = device;
-				app.showMessage('Connected! Touch buttons to turn LED on/off.');
-			},
-			function(errorCode)
-			{
-				app.showMessage('Connect error: ' + errorCode + '.');
-			});
-	};
-
-	document.addEventListener(
-		'deviceready',
-		function() { evothings.scriptsLoaded(app.onDeviceReady) },
-		false);
-	</script>
+	<script src="cordova.js"></script>
+	<script src="libs/jquery/jquery.js"></script>
+	<script src="libs/evothings/evothings.js"></script>
+	<script src="libs/evothings/ui/ui.js"></script>
+	<script src="libs/evothings/arduinoble/arduinoble.js"></script>
+	<script src="src/main.js"></script>
 
 </body>
 

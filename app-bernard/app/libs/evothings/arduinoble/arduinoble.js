@@ -64,12 +64,12 @@ evothings.arduinoble = {};
 	 */
 	evothings.arduinoble.connect = function(deviceName, success, fail)
 	{
-		console.log('in conncet');
+		console.log('In arduinoble conncet');
 		evothings.easyble.reportDeviceOnce(true);
 		evothings.easyble.startScan(
 			function(device)
 			{
-				console.log('success');
+				console.log('Arduinoble connect success');
 				if (device.hasName(deviceName))
 				{
 					evothings.easyble.stopScan();
@@ -155,15 +155,17 @@ evothings.arduinoble = {};
 				});
 		};
 
-		device.enableNotifications = function(uuid) {
+		device.enableNotifications = function(uuid, callback) {
 			uuid = uuid || '713d0003-503e-4c75-ba94-3148f18d941e';
 			device.enableNotification(
 				uuid,
 				function(data)
 				{
-					console.log('enableNotifications success');
+					// console.log('enableNotifications success');
 					//console.log(data);
-					console.log('characteristic data: ' + new DataView(data).getUint8(0, true));
+					var readableData = new DataView(data).getUint8(0, true);
+					// console.log('Characteristic data: ' + readableData);
+					callback(readableData);
 				},
 				function(errorCode)
 				{
