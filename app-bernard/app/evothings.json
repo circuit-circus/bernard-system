@@ -1,3 +1,17 @@
 {
-  "uuid": "9fa710b7-48f8-434d-bed0-dac6409245b1"
+  "name": "Bernard app system",
+  "version": "1.0",
+  "title": "BERNARD",
+  "description" : "App system for Bernard",
+  "description": "",
+  "tags": [],
+  "libraries": [
+    {
+      "name": "jquery",
+      "version": "2.1.1"
+    }
+  ],
+  "index-file": "index.html",
+  "uuid": "9fa710b7-48f8-434d-bed0-dac6409245b1",
+  "icon": "app-icon.png"
 }
