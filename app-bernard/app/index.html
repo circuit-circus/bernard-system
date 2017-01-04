@@ -9,20 +9,17 @@
 	<title>BERNARD</title>
 
 	<link rel="stylesheet" href="src/style.css">
-
-
 	<script>
-	// Redirect console.log to Evothings Workbench.
-	if (window.hyper && window.hyper.log) { console.log = hyper.log }
-	window.onerror = function(msg, url, line)
-	{
-		console.log(msg + ": " + url + ":" + line);
-	};
+		// Redirect console.log to Evothings Workbench.
+		if (window.hyper && window.hyper.log) { console.log = hyper.log }
+		window.onerror = function(msg, url, line) {
+			console.log(msg + ": " + url + ":" + line);
+		};
 	</script>
 
 </head>
 
-<body ontouchstart=""><!-- ontouchstart="" enables low-delay CSS transitions. -->
+<body class="" ontouchstart=""><!-- ontouchstart="" enables low-delay CSS transitions. -->
 
 	<header>
 		<h1>Bernard</h1>
@@ -36,17 +33,23 @@
 
 	<div class="system-connected-container">
 		<main>
-			<p class="encourage-text bold">Almost there!</p>
-			<p class="encourage-text time-left">...</p>
-			<p class="tap-text"><span class="tap-amount">80</span> SEK / Tap <span class="change-tap">Change</span></p>
-			<div class="item-progress-container">
-				<div class="progress" data-item-paid="7482" data-item-price="8895">
-				    <svg class="progress-circle" width="200px" height="200px" xmlns="http://www.w3.org/2000/svg">
-					    <circle class="progress-circle-back" cx="80" cy="80" r="74"></circle>
-				        <circle class="progress-circle-prog" cx="80" cy="80" r="74"></circle>
-				    </svg>
-					<div class="progress-text" data-progress="0">0 SEK SAVED</div>
+			<div class="saving-progress-container">
+				<p class="encourage-text bold">Almost there!</p>
+				<p class="encourage-text time-left">...</p>
+				<p class="tap-text"><span class="tap-amount">80</span> SEK / Tap <span class="change-tap">Change</span></p>
+				<div class="item-progress-container">
+					<div class="progress" data-item-paid="7482" data-item-price="8895">
+					    <svg class="progress-circle" width="200px" height="200px" xmlns="http://www.w3.org/2000/svg">
+						    <circle class="progress-circle-back" cx="80" cy="80" r="74"></circle>
+					        <circle class="progress-circle-prog" cx="80" cy="80" r="74"></circle>
+					    </svg>
+						<div class="progress-text" data-progress="0">0 SEK SAVED</div>
+					</div>
 				</div>
+			</div>
+			<div class="saving-done-container">
+				<p class="bold">Awesome 🙌</p>
+				<p>Now smash your Savings Pod to complete your dream!</p>
 			</div>
 		</main>
 
@@ -71,39 +74,12 @@
 		</footer>
 	</div>
 
-<!-- 	<header>
-		<button class="back" onclick="history.back()">
-			<img src="ui/images/arrow-left.svg" />
-		</button>
-
-		<img class="logotype" src="ui/images/logo.svg" alt="Evothings" />
-
-		<!--<button class="menu" onclick=""><img src="ui/images/menu.svg" /></button>-->
-	<!-- </header>
-
-	<h1>BERNARD</h1>
-
-	<p id="info">Initializing...</p>
-
-	<button class="blue wide" onclick="app.connect()">CONNECT</button>
-
-	<br />
-
-	<button class="yellow wide" onclick="app.getData()">Get data</button>
-
-	<button class="green wide big" onclick="app.ledOn()">LED ON</button>
-
-	<br />
-
-	<button class="red wide big" onclick="app.ledOff()">LED OFF</button> -->
-
-
-	<script src="cordova.js"></script>
 	<script src="libs/jquery/jquery.js"></script>
+	<script src="src/main.js"></script>
+	<script src="cordova.js"></script>
 	<script src="libs/evothings/evothings.js"></script>
 	<script src="libs/evothings/ui/ui.js"></script>
 	<script src="libs/evothings/arduinoble/arduinoble.js"></script>
-	<script src="src/main.js"></script>
 
 </body>
 

@@ -64,12 +64,10 @@ evothings.arduinoble = {};
 	 */
 	evothings.arduinoble.connect = function(deviceName, success, fail)
 	{
-		console.log('In arduinoble conncet');
 		evothings.easyble.reportDeviceOnce(true);
 		evothings.easyble.startScan(
 			function(device)
 			{
-				console.log('Arduinoble connect success');
 				if (device.hasName(deviceName))
 				{
 					evothings.easyble.stopScan();
@@ -161,10 +159,7 @@ evothings.arduinoble = {};
 				uuid,
 				function(data)
 				{
-					// console.log('enableNotifications success');
-					//console.log(data);
 					var readableData = new DataView(data).getUint8(0, true);
-					// console.log('Characteristic data: ' + readableData);
 					callback(readableData);
 				},
 				function(errorCode)
