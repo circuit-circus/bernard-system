@@ -53,8 +53,11 @@ void loop() {
     // while the central is still connected to peripheral:
     while (central.connected()) {
       photoVal = analogRead(photoPin);
+      if(photoVal < 900) {
+        Serial.println(photoVal);
+      }
 
-      if (photoVal < 1000) {
+      if (photoVal < 900) {
         //Serial.println("Sending 1");
         switchCharacteristic.setValue(1);  // and update the heart rate measurement characteristic
       } else {
