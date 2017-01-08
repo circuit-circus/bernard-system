@@ -1,7 +1,3 @@
-/*
- * Copyright (c) 2016 Intel Corporation.  All rights reserved.
- * See the bottom of this file for the license terms.
- */
 
 #include <CurieBLE.h>
 
@@ -17,11 +13,25 @@ int photoVal;
 
 long previousMillis = 0;  // last time the heart rate was checked, in ms
 
+int percent = 1;
+
+int pinArray[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+
 void setup() {
   Serial.begin(9600);
 
   pinMode(ledPin, OUTPUT);
   pinMode(photoPin, INPUT);
+
+  for (int i = 0; i < 10; i++) {
+    pinMode(pinArray[i], OUTPUT);
+
+    if(i <= percent) {
+      digitalWrite(pinArray[i], HIGH);
+    } else {
+      digitalWrite(pinArray[i], LOW);
+    }
+  }
 
   // set advertised local name and service UUID:
   blePeripheral.setLocalName("LED");
@@ -53,16 +63,27 @@ void loop() {
     // while the central is still connected to peripheral:
     while (central.connected()) {
       photoVal = analogRead(photoPin);
-      if(photoVal < 900) {
-        Serial.println(photoVal);
-      }
+      Serial.println(photoVal);
 
-      if (photoVal < 900) {
+      if (photoVal < 20) {
         //Serial.println("Sending 1");
         switchCharacteristic.setValue(1);  // and update the heart rate measurement characteristic
+        percent++;
+        Serial.println(percent);
+
       } else {
         //Serial.println("Sending 0");
         switchCharacteristic.setValue(0);
+      }
+
+      // Loop through LEDs
+      for (int i = 0; i < 10; i++) {
+        if(i <= percent) {
+          digitalWrite(pinArray[i], HIGH);
+        } else {
+          digitalWrite(pinArray[i], LOW);
+        }
+        
       }
     }
 
