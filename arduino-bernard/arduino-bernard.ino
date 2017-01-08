@@ -61,24 +61,22 @@ void loop() {
 
     // while the central is still connected to peripheral:
     while (central.connected()) {
-      photoVal = analogRead(photoPin);
+
+      photoVal = analogRead(photoPin); // Read photoresistor val
       Serial.println(photoVal);
 
-
       unsigned long currentMillis = millis();
-      
+      // If photoresistor is blocked AND a second has passed
       if (photoVal < 20 && currentMillis - previousMillis >= 1000) {
         previousMillis = currentMillis;
 
-        switchCharacteristic.setValue(1);  // and update the heart rate measurement characteristic
+        switchCharacteristic.setValue(1);  // Send signal to app
         percent++;
-        Serial.println(percent);
-
       } else {
         switchCharacteristic.setValue(0);
       }
 
-      // Loop through LEDs
+      // Loop through LEDs and turn them off/on
       for (int i = 0; i < 10; i++) {
         if(i <= percent) {
           digitalWrite(pinArray[i], HIGH);
