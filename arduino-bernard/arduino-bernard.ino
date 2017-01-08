@@ -7,20 +7,17 @@ BLEService ledService("19B10000-E8F2-537E-4F6C-D104768A1214"); // BLE LED Servic
 // BLE LED Switch Characteristic - custom 128-bit UUID, read and writable by central
 BLEUnsignedCharCharacteristic switchCharacteristic("19B10001-E8F2-537E-4F6C-D104768A1214", BLERead | BLENotify);
 
-const int ledPin = 13; // pin to use for the LED
 const int photoPin = 0;
 int photoVal;
 
-long previousMillis = 0;  // last time the heart rate was checked, in ms
+unsigned long previousMillis = 0;
 
-int percent = 1;
-
-int pinArray[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+const int pinArray[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}; // Light array
+int percent = 1; // Progress of the lights
 
 void setup() {
   Serial.begin(9600);
 
-  pinMode(ledPin, OUTPUT);
   pinMode(photoPin, INPUT);
 
   for (int i = 0; i < 10; i++) {
@@ -32,6 +29,8 @@ void setup() {
       digitalWrite(pinArray[i], LOW);
     }
   }
+
+  // BLUETOOTH
 
   // set advertised local name and service UUID:
   blePeripheral.setLocalName("LED");
@@ -65,14 +64,17 @@ void loop() {
       photoVal = analogRead(photoPin);
       Serial.println(photoVal);
 
-      if (photoVal < 20) {
-        //Serial.println("Sending 1");
+
+      unsigned long currentMillis = millis();
+      
+      if (photoVal < 20 && currentMillis - previousMillis >= 1000) {
+        previousMillis = currentMillis;
+
         switchCharacteristic.setValue(1);  // and update the heart rate measurement characteristic
         percent++;
         Serial.println(percent);
 
       } else {
-        //Serial.println("Sending 0");
         switchCharacteristic.setValue(0);
       }
 

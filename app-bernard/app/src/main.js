@@ -69,13 +69,8 @@ app.getData = function() {
 function handleData(data) {
     data = parseInt(data, 10);
     if( data === 1 ) {
-
-        if (new Date() - lastTap >= 1000) {
-            lastTap = new Date();
-
-            paid += tapAmount;
-            setProgress();
-        }
+        paid += tapAmount;
+        setProgress();
     }
 }
 
