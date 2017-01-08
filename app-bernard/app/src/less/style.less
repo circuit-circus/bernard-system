@@ -1,4 +1,8 @@
 
+@primary-color: #3E5B63;
+@secondary-color: #FAE674;
+@navigation-width: 250px;
+
 * {
     box-sizing: border-box;
 }
@@ -6,11 +10,16 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: #f1f1f1;
+    background-color: #E7E5D6;
     color: #1a1a1a;
     font-family: sans-serif;
 
+    width: 100vw;
+    height: 100vh;
+
     font-family: 'Alright Sans LP';
+
+    transition: transform 0.2s ease;
 
 
     &.done {
@@ -57,17 +66,24 @@ p {
 header {
     margin: 0;
     padding: 0.75rem 1rem;
-    background-color: mediumseagreen;
+    background-color: @primary-color;
     color: #fff;
     text-align: center;
     position: relative;
+
+    h1 {
+        display: inline-block;
+    }
 }
 
-.burger-container, .plus-container {
+.navigation-toggle-container, .plus-container {
     position: absolute;
     top: 2rem;
     left: 1.5rem;
     width: 20px;
+    height: 20px;
+
+    cursor: pointer;
 }
 
 .plus-container {
@@ -78,19 +94,20 @@ header {
     font-size: 28px;
 }
 
-.burger {
+.navigation-toggle {
     position: absolute;
     background: #fff;
     width: 100%;
     height: 2px;
     opacity: 1;
+    top: 0px;
 
     &:before {
         position: absolute;
         background: #fff;
         width: 100%;
         height: 2px;
-        top: -6px;
+        top: 6px;
         content: "";
         display: block;
     }
@@ -100,10 +117,34 @@ header {
         background: #fff;
         width: 100%;
         height: 2px;
-        top: 6px;
+        top: 12px;
         content: "";
         display: block;
     }
+}
+
+.navigation-container {
+    position: fixed;
+    left: -@navigation-width;
+    top: 0;
+    height: 100vh;
+    width: @navigation-width;
+    background-color: darken(@primary-color, 5%);
+
+    .navigation-content {
+        text-align: left;
+        padding: 4rem 2rem;
+
+        .navigation-item {
+            margin-bottom: 1rem;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+    }
+}
+
+body.navigation-open {
+    transform: translate(@navigation-width, 0);
 }
 
 .system-loading-container {
@@ -118,7 +159,7 @@ header {
         width: 20px;
         height: 20px;
         border-radius: 50%;
-        background-color: mediumseagreen;
+        background-color: @primary-color;
         margin: 0 auto;
         animation-name: loading;
         animation-duration: 1.5s;
@@ -164,7 +205,7 @@ main {
 
 .tap-text {
     font-size: 14px;
-    color: mediumseagreen;
+    color: @primary-color;
 
     .change-tap {
         text-transform: uppercase;
@@ -201,7 +242,7 @@ main {
 
     .progress-circle-prog {
         fill: none;
-        stroke: mediumseagreen;
+        stroke: @primary-color;
         stroke-width: 13px;
         stroke-dasharray: 0 999;
         stroke-dashoffset: 0px;
@@ -228,7 +269,7 @@ footer {
 
     .footer-fill {
         position: absolute;
-        background-color: mediumseagreen;
+        background-color: @primary-color;
         bottom: 0;
         width: 100%;
         height: 120px;
@@ -310,7 +351,7 @@ footer {
                random(@width)-@width / 2 + px
                random(@height)-@height / 1.2 + px
                hsl(161, 100, 10+random(63));
-  @box-shadow2: @box-shadow2, 0 0 mediumseagreen
+  @box-shadow2: @box-shadow2, 0 0 @primary-color
 }
 @mixin keyframes (@animationName) {
     @keyframes #{@animationName} {

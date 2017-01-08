@@ -21,7 +21,22 @@ $(document).ready(function() {
         'deviceready',
         function() {
             evothings.scriptsLoaded(app.onDeviceReady)
-        }, false);
+        },
+        false
+    );
+
+    $('.navigation-toggle-container').on('click', function() {
+        $('body').toggleClass('navigation-open');
+    });
+
+    $('.navigation-item.reload').on('click', function() {
+        location.reload();
+    });
+
+    $('.navigation-item.reload').on('click', function() {
+        history.back();
+    });
+
 });
 
 app.connect = function() {
