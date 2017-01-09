@@ -10,10 +10,12 @@ BLEUnsignedCharCharacteristic switchCharacteristic("19B10001-E8F2-537E-4F6C-D104
 const int photoPin = 0;
 int photoVal;
 
-unsigned long previousMillis = 0;
+unsigned long prevTapMillis = 0;
+unsigned long prevDoneMillis = 0;
 
 const int pinArray[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}; // Light array
 int percent = 1; // Progress of the lights
+bool savingDone = false;
 
 void setup() {
   Serial.begin(9600);
@@ -63,19 +65,33 @@ void loop() {
     while (central.connected()) {
 
       photoVal = analogRead(photoPin); // Read photoresistor val
-      Serial.println(photoVal);
+      //Serial.println(photoVal);
 
       unsigned long currentMillis = millis();
-      // If photoresistor is blocked AND a second has passed
-      if (photoVal < 20 && currentMillis - previousMillis >= 1000) {
-        previousMillis = currentMillis;
 
-        switchCharacteristic.setValue(1);  // Send signal to app
-        percent++;
-      } else {
-        switchCharacteristic.setValue(0);
+      if(percent >= 9 && !savingDone) {
+        savingDone = true;
+        prevDoneMillis = currentMillis;
       }
 
+      if(!savingDone) {
+
+        // If photoresistor is blocked AND a second has passed
+        if (photoVal < 20 && currentMillis - prevTapMillis >= 1000) {
+          prevTapMillis = currentMillis;
+  
+          switchCharacteristic.setValue(1);  // Send signal to app
+          percent++;
+        } else {
+          switchCharacteristic.setValue(0);
+        }
+      } else if (savingDone && currentMillis - prevDoneMillis >= 15000 ) { // Restart the system
+        savingDone = false;
+        percent = 1;
+        switchCharacteristic.setValue(2);
+        Serial.println("Restart");
+      }
+      
       // Loop through LEDs and turn them off/on
       for (int i = 0; i < 10; i++) {
         if(i <= percent) {

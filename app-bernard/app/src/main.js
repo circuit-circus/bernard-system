@@ -4,7 +4,6 @@ var app = {}
 var paid = 8270;
 var price = 8895;
 var tapAmount = 80;
-var lastTap = 0;
 
 $(document).ready(function() {
 
@@ -71,6 +70,13 @@ function handleData(data) {
     if( data === 1 ) {
         paid += tapAmount;
         setProgress();
+    } else if ( data === 2) { // Restart signal
+        $('.restarting-container').show();
+        setTimeout(function() {
+            $('.restarting-container').hide();
+        }, 4000);
+        paid = 8270;
+        setProgress();
     }
 }
 
@@ -95,6 +101,8 @@ function setProgress() {
         $('.time-left').text( daysToGo === 1 ? 'Wow, only ' + daysToGo + ' day left' : 'Just ' + daysToGo + ' days left' );
 
         var percent = paid / price * 100;
+
+        $('body').removeClass('done');
 
         // GRAPH
         var x = document.querySelector('.progress-circle-prog');
